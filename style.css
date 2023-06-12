@@ -18,5 +18,9 @@ button {
     width: 200px;
 }
 
-
+.grid-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 

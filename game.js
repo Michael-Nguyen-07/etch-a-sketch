@@ -1,4 +1,3 @@
-
 function createCell() {
   const cell = document.createElement("td");
   cell.classList.add("cell");
@@ -8,22 +7,21 @@ function setCellDimension() {
   const cell = createCell();
   cell.style.width = "20px";
   cell.style.height = "20px";
-  cell.style.border = "1px solid blue"; 
+  cell.style.border = "1px solid gray";
   return cell;
 }
 
 const container = document.querySelector(".grid-container");
 function generateTable() {
-  
   const tblBody = document.createElement("tbody");
+  tblBody.classList.add("tblBody");
   // creating grid
-  for (let i = 0; i < 16; i++) {
-    
+  for (let i = 0; i < 30; i++) {
     const row = document.createElement("tr"); // creates table row
 
-    for (let j = 0; j < 16; j++) {
+    for (let j = 0; j < 30; j++) {
       const cell = setCellDimension(); // create cell for row
-      
+
       row.appendChild(cell);
     }
 
@@ -33,12 +31,24 @@ function generateTable() {
 
   // put the <tbody> in the <table>
   container.appendChild(tblBody);
-
 }
-
-const btn = document.querySelector(".btn");
+generateTable();
+/* const btn = document.querySelector(".btn");
 btn.addEventListener("click", () => {
-  generateTable(); 
-});
+  generateTable();
+}); */
 
 
+// ERROR
+function changeColor(e) {
+  e.style.backgroundColor = "black";
+};
+
+const cells = document.getElementsByClassName("cell");
+
+for (let element of cells) {
+  element.addEventListener("mouseenter", (event) => {
+    changeColor(element);
+    
+  });
+}
