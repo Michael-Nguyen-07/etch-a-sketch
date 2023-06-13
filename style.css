@@ -1,3 +1,11 @@
+/* :root {
+  font-size:0.625%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+ */
 h1,
 .description {
   display: flex;
@@ -18,9 +26,12 @@ button {
     width: 200px;
 }
 
-.grid-container {
+.game-container {
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
 }
-
+/* Set fix height and width*/
+.grid {
+  border: 2px solid red;
+}

@@ -11,44 +11,71 @@ function setCellDimension() {
   return cell;
 }
 
-const container = document.querySelector(".grid-container");
+const grid = document.querySelector(".grid");
 function generateTable() {
   const tblBody = document.createElement("tbody");
   tblBody.classList.add("tblBody");
   // creating grid
-  for (let i = 0; i < 30; i++) {
+  for (let i = 0; i < 20; i++) {
     const row = document.createElement("tr"); // creates table row
 
-    for (let j = 0; j < 30; j++) {
+    for (let j = 0; j < 20; j++) {
       const cell = setCellDimension(); // create cell for row
 
       row.appendChild(cell);
     }
 
-    // add the row to the end of the table body
     tblBody.appendChild(row);
   }
-
-  // put the <tbody> in the <table>
-  container.appendChild(tblBody);
+  grid.appendChild(tblBody);
 }
+
 generateTable();
-/* const btn = document.querySelector(".btn");
-btn.addEventListener("click", () => {
-  generateTable();
-}); */
 
+function randomRGB(cell) {
+  const r = Math.floor(Math.random() * 256);
+  const g = Math.floor(Math.random() * 256);
+  const b = Math.floor(Math.random() * 256);
+  cell.style.backgroundColor = `rgb(${r},${g},${b})`;
+}
+function setColorBlack(cell) {
+  cell.style.backgroundColor = "black";
+}
 
-// ERROR
-function changeColor(e) {
-  e.style.backgroundColor = "black";
-};
+function setColorWhite(cell) {
+  cell.style.backgroundColor = "white";
+}
+
+/* 
+let flag = "undefined";
+const buttons = document.querySelectorAll("button");
+for (let button of buttons) {
+  button.addEventListener("click", () => {
+    if (button.textContent === "Black") {
+      flag = "Black";
+    } else if (button.textContent === "RGB") {
+      flag = "RGB";
+    } else if (button.textContent === "Eraser") {
+      flag = "White"
+    }
+  });
+}
+ */
 
 const cells = document.getElementsByClassName("cell");
-
-for (let element of cells) {
-  element.addEventListener("mouseenter", (event) => {
-    changeColor(element);
-    
+const buttons = document.querySelectorAll("button");
+for (let button of buttons) {
+  button.addEventListener("click", () => {
+    for (let element of cells) {
+      element.addEventListener("mouseenter", (event) => {
+        if (button.textContent === "RGB") {
+          randomRGB(element);
+        } else if (button.textContent === "Black") {
+          setColorBlack(element);
+        } else if (button.textContent === "Eraser") {
+        setColorWhite(element);
+        }
+      });
+    }
   });
 }
