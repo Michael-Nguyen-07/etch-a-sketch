@@ -1,36 +1,44 @@
-function createCell() {
-  const cell = document.createElement("td");
-  cell.classList.add("cell");
-  return cell;
-}
-function setCellDimension() {
-  const cell = createCell();
-  cell.style.width = "20px";
-  cell.style.height = "20px";
-  cell.style.border = "1px solid gray";
-  return cell;
-}
 
-const grid = document.querySelector(".grid");
-function generateTable() {
-  const tblBody = document.createElement("tbody");
-  tblBody.classList.add("tblBody");
-  // creating grid
-  for (let i = 0; i < 20; i++) {
-    const row = document.createElement("tr"); // creates table row
+const grid = document.getElementById("grid-container");
+function createGrid (cellsXAndY = 16, newGrid = grid) {
+    let cellsTotal = cellsXAndY * cellsXAndY
+    let cellDimensions = 200/cellsXAndY
+    for (i=0; i < cellsTotal; i++) {
+        singleCell = document.createElement('div');
+        singleCell.classList.add('cell');
+        singleCell.style.width = `${cellDimensions}px`;
+        singleCell.style.height = `${cellDimensions}px`;
+        singleCell.style.border = "1px solid gray";
+        newGrid.appendChild(singleCell);
+    };
+};
+createGrid(16)
+function resetTable() {
+  const cells = Array.from(document.getElementsByClassName("cell"));
+  cells.forEach((e) => {
+    eClone = e.cloneNode(true);
+    e.parentNode.replaceChild(eClone, e);
+  });
+} 
 
-    for (let j = 0; j < 20; j++) {
-      const cell = setCellDimension(); // create cell for row
-
-      row.appendChild(cell);
+// set flag for button value
+let flag = "undefined";
+const buttons = document.querySelectorAll("button");
+for (let button of buttons) {
+  button.addEventListener("click", () => {
+    switch (button.textContent) {
+      case "Black":
+        flag = "Black";
+        break;
+      case "RGB":
+        flag = "RGB";
+        break;
+      case "Eraser":
+        flag = "Eraser";
+        break;
     }
-
-    tblBody.appendChild(row);
-  }
-  grid.appendChild(tblBody);
+  });
 }
-
-generateTable();
 
 function randomRGB(cell) {
   const r = Math.floor(Math.random() * 256);
@@ -41,41 +49,37 @@ function randomRGB(cell) {
 function setColorBlack(cell) {
   cell.style.backgroundColor = "black";
 }
-
 function setColorWhite(cell) {
   cell.style.backgroundColor = "white";
 }
-
-/* 
-let flag = "undefined";
-const buttons = document.querySelectorAll("button");
-for (let button of buttons) {
-  button.addEventListener("click", () => {
-    if (button.textContent === "Black") {
-      flag = "Black";
-    } else if (button.textContent === "RGB") {
-      flag = "RGB";
-    } else if (button.textContent === "Eraser") {
-      flag = "White"
-    }
-  });
+function applyCustomColor(cell) {
+  colorPicker = document.getElementById("colorPicker");
+  cell.style.backgroundColor = colorPicker.value;
 }
- */
 
-const cells = document.getElementsByClassName("cell");
-const buttons = document.querySelectorAll("button");
-for (let button of buttons) {
-  button.addEventListener("click", () => {
-    for (let element of cells) {
-      element.addEventListener("mouseenter", (event) => {
-        if (button.textContent === "RGB") {
-          randomRGB(element);
-        } else if (button.textContent === "Black") {
-          setColorBlack(element);
-        } else if (button.textContent === "Eraser") {
+const cells = Array.from(document.getElementsByClassName("cell"));
+cells.forEach((element) => {
+  element.addEventListener("mouseenter", (event) => {
+    console.log("this is mouse enter event");
+    switch (flag) {
+      case "RGB":
+        randomRGB(element);
+        break;
+      case "Black":
+        setColorBlack(element);
+        break;
+      case "Eraser":
         setColorWhite(element);
-        }
-      });
+        break;
+      default:
+        applyCustomColor(element);
     }
   });
-}
+});
+
+function resetTable() {
+  const cells = Array.from(document.getElementsByClassName("cell"));
+  cells.forEach((cell) => {
+    setColorWhite(cell);
+  });
+} 

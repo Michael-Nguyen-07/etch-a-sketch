@@ -26,12 +26,15 @@ button {
     width: 200px;
 }
 
-.game-container {
+ .game-container {
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} 
 /* Set fix height and width*/
-.grid {
-  border: 2px solid red;
+#grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 300px;
+  height: 200px;
 }
